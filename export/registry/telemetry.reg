@@ -1,0 +1,10 @@
+Windows Registry Editor Version 5.00
+
+; --------------------------------------------
+; 📰 Telemetry, data collection, analytics
+; --------------------------------------------
+
+; This would be uncommented only telemetry was open sourced
+; [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection]
+; "AllowTelemetry"=dword:00000003
+; "MaxTelemetryAllowed"=dword:00000003

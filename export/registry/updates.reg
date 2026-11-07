@@ -1,0 +1,26 @@
+Windows Registry Editor Version 5.00
+
+; --------------------------------------------
+; 🔁 Updates
+; --------------------------------------------
+
+; 📍 No use unless a tablet
+[HKEY_LOCAL_MACHINE\SYSTEM\Maps]
+"AutoUpdateEnabled"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings]
+"IsExpedited"=dword:00000000
+"AllowAutoWindowsUpdateDownloadOverMeteredNetwork"=dword:00000000
+
+; ⏫ Update Settings
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU]
+"NoAutoUpdate"=dword:00000000
+"ScheduledInstallDay"=dword:00000000
+"NoAutoRebootWithLoggedOnUsers"=dword:00000001
+"ScheduledInstallEveryWeek"=dword:00000001
+
+; ➰ Delivery Optimization - torrent-like content distribution
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization]
+"DODownloadMode"=dword:00000003
+"DOMaxBackgroundDownloadBandwidth"=dword:00000000
+"DOMaxForegroundDownloadBandwidth"=dword:00000000

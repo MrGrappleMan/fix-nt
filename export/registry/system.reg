@@ -1,0 +1,98 @@
+Windows Registry Editor Version 5.00
+
+; --------------------------------------------
+; ⚙️ System Tweaks
+; --------------------------------------------
+
+; Allow uncapped file path length
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem]
+"LongPathsEnabled"=dword:00000001
+
+; Only load drivers signed by modern WHQL implementation
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Policy]
+"UpgradedSystem"=dword:00000000
+
+; Fast startup, precaches the OS, but you are better off leaving your device on s2idle
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Power]
+"HiberbootEnabled"=dword:00000001
+
+; No startup delay - parallize unless order is required
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize]
+"StartupDelayInMSec"=dword:00000000
+
+;; Memory Management
+
+; Prefetch/Superfetch - preload data based on predictions, it gets cleared once true demand is seen
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters]
+"EnablePrefetcher"=dword:00000003
+"EnableSuperfetch"=dword:00000003
+
+; Clearing pagefile at every shutdown wears down the drive and is inefficient
+; Allow unnecessary parts of the kernel to be paged out.
+; Swap is important to exist, prevents OOMs, reduces hard memory requirements and needed by some programs
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management]
+"LargeSystemCache"=dword:00000001
+"IoPageLockLimit"=dword:00000000
+"DisablePagingExecutive"=dword:00000000
+"ClearPageFileAtShutdown"=dword:00000000
+"PagingFiles"=hex(7):3f,00,3a,00,5c,00,70,00,61,00,67,00,65,00,66,00,69,00,6c,\
+  00,65,00,2e,00,73,00,79,00,73,00,00,00
+
+; Background defragmentation and optimize hard drive performance
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\OptimalLayout]
+"EnableAutoLayout"=dword:00000001
+
+; Enable disk trimming
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction]
+"Enable"="Y"
+
+; Post Processing Scheduling
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\DisplayPostProcessing]
+"Affinity"=dword:00000000
+"Background Only"="False"
+"BackgroundPriority"=dword:00000018
+"Clock Rate"=dword:00002710
+"GPU Priority"=dword:00000012
+"Priority"=dword:00000008
+"Scheduling Category"="High"
+"SFIO Priority"="High"
+"Latency Sensitive"="False"
+
+; Games Scheduling
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games]
+"Affinity"=dword:00000000
+"Background Only"="False"
+"Clock Rate"=dword:00002710
+"GPU Priority"=dword:00000008
+"Priority"=dword:00000006
+"Scheduling Category"="High"
+"SFIO Priority"="High"
+"Latency Sensitive"="True"
+
+; Audio Scheduling
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Audio]
+"Affinity"=dword:00000000
+"Background Only"="False"
+; "Clock Rate"=dword:00002710
+; "GPU Priority"=dword:00000008
+; "Priority"=dword:00000006
+; "Scheduling Category"="Medium"
+; "SFIO Priority"="Normal"
+
+; Prioritize foreground over background
+; 1:1 or No Foreground boost, Fixed length / Long quantum:-
+; Low overhead, High throughput, deterministic tasks, best for server workloads and batch processing
+; "Win32PrioritySeparation"=dword:00000024
+;
+; 3:1 or High Foreground boost, Variable length / Short quantum: -
+; Granular resource allocation, Low latency, unpredictable and dynamic workloads, best for workstations and interactive tasks
+; "Win32PrioritySeparation"=dword:00000038
+;
+; The two above present exact opposite end extremes for situations, you may mix them experimentally
+; Default is set to Case 2
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\PriorityControl]
+"Win32PrioritySeparation"=dword:00000038
+
+; No reservation for backgroud processes - less biased/no QoS
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile]
+"SystemResponsiveness"=dword:00000000
